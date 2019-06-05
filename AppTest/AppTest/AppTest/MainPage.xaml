@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AppTest.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+    xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <StackLayout>
+        <BoxView
+            BackgroundColor="Gainsboro"
+            HeightRequest="100"
+            HorizontalOptions="FillAndExpand" />
+        <!--  other controls without scroll  -->
+        <controls:ParentScrollView>
+            <StackLayout
+                x:Name="listExample"
+                Spacing="0"
+                VerticalOptions="FillAndExpand">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            ColumnSpacing="0"
+                            RowSpacing="0"
+                            VerticalOptions="FillAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="130" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="40" />
+                            </Grid.ColumnDefinitions>
+                            <StackLayout
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Padding="10">
+                                <Label FontSize="30" Text="{Binding Source={x:Reference cvLevel}, Path=SelectedIndex}" />
+                            </StackLayout>
+                            <StackLayout
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Padding="15,0,5,0"
+                                HorizontalOptions="FillAndExpand">
+                                <Label Text="{Binding Description}" TextColor="Black">
+                                    <Label.FontSize>
+                                        <OnPlatform x:TypeArguments="x:Double">
+                                            <On Platform="iOS" Value="15" />
+                                            <On Platform="Android" Value="15" />
+                                            <On Platform="UWP" Value="12" />
+                                        </OnPlatform>
+                                    </Label.FontSize>
+                                </Label>
+                                <cards:CarouselView
+                                    x:Name="cvLevel"
+                                    HorizontalOptions="FillAndExpand"
+                                    IsCyclical="False"
+                                    IsPanInteractionEnabled="False"
+                                    ItemsSource="{Binding Levels, Mode=TwoWay}"
+                                    SwipeThresholdDistance="100"
+                                    VerticalOptions="FillAndExpand"
+                                    VerticalSwipeThresholdDistance="1000">
+                                    <cards:CarouselView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ContentView>
+                                                <Label
+                                                    FontSize="Small"
+                                                    Text="{Binding Description}"
+                                                    TextColor="Gray"
+                                                    VerticalOptions="FillAndExpand" />
+                                            </ContentView>
+                                        </DataTemplate>
+                                    </cards:CarouselView.ItemTemplate>
+                                </cards:CarouselView>
+                            </StackLayout>
+                            <!--  linea que divide las filas  -->
+                            <BoxView
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                BackgroundColor="LightGray"
+                                HeightRequest=".5" />
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </controls:ParentScrollView>
+    </StackLayout>
+
+</ContentPage>
